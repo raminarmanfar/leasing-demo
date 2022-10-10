@@ -5,4 +5,4 @@ Application dockerization steps:
 2- $ ./gradlew bootJar (windows: $ gradlew bootJar)
 3- Change the current directory to leasing-demo/ (cd ..)
 4- $ docker-compose up --build -d
-5- open browser and redirect to the localhost:4200
+5- open browser and redirect to the localhost:3309

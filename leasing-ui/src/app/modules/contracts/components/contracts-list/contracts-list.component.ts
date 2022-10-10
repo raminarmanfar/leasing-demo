@@ -62,7 +62,7 @@ export class ContractsListComponent implements OnInit {
   }
 
   private openContractDetailDialog(metadata: DialogMetadata, contractDetailsWithIds?: ContractDetailWithIds): void {
-    const selectedContractWithIds = JSON.parse(JSON.stringify(contractDetailsWithIds));
+    const selectedContractWithIds = contractDetailsWithIds ? JSON.parse(JSON.stringify(contractDetailsWithIds)) : contractDetailsWithIds;
     const dialogRef = this.dialog.open(ContractDetailComponent, {
       width: '450px',
       data: {metadata, contractData: selectedContractWithIds},

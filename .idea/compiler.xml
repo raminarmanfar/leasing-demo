@@ -10,10 +10,5 @@
         <module name="com.armanfar.leasing.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="com.armanfar.leasing" target="17" />
-      <module name="com.armanfar.leasing.main" target="17" />
-      <module name="com.armanfar.leasing.test" target="17" />
-    </bytecodeTargetLevel>
   </component>
 </project>
