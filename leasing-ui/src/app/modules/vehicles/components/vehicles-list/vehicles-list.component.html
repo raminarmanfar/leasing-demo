@@ -1,0 +1,13 @@
+<div>
+  <h1>Vehicles List</h1>
+  <app-table [dataSource]="vehicles" [fieldsMetadata]="fieldsMetadata" [showDetailBtn]="false"
+             [displayedColumns]="['id', 'brand', 'model', 'model year', 'vin', 'price', 'options']"
+             (editItem)="onClick(ButtonClickActionEnum.EDIT_VEHICLE, $event)"
+             (deleteItem)="onClick(ButtonClickActionEnum.DELETE_VEHICLE, $event)">
+  </app-table>
+</div>
+
+<button mat-fab color="primary" class="float-btn" [matTooltip]="'Add new Customer'"
+        (click)="onClick(ButtonClickActionEnum.ADD_NEW_VEHICLE)">
+  <mat-icon>add</mat-icon>
+</button>

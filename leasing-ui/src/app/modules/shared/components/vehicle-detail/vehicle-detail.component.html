@@ -1,0 +1,68 @@
+<mat-card *ngIf="formGroup">
+  <mat-card-title>{{ data.metadata.title }}</mat-card-title>
+
+  <mat-card-content>
+    <form class="example-form" [formGroup]="formGroup">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Brand</mat-label>
+        <mat-select [(value)]="data.vehicleData.brand" formControlName="brand"
+                    (selectionChange)="setSelectedBrand($event.value)">
+          <mat-option *ngFor="let carBrand of carBrands" [value]="carBrand.brand">
+            {{ carBrand.brand }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formGroup.controls['brand'].hasError('required')">
+          {{ 'You must select brand of the car'}}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Model</mat-label>
+        <mat-select [(value)]="data.vehicleData.model" formControlName="model">
+          <mat-option *ngFor="let model of selectedBrand.models" [value]="model">
+            {{ model }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formGroup.controls['model'].hasError('required')">
+          {{ 'You must select model of the car'}}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Model-Year</mat-label>
+        <mat-select [(value)]="data.vehicleData.modelYear" formControlName="modelYear">
+          <mat-option *ngFor="let modelYear of modelYears" [value]="modelYear">
+            {{ modelYear }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formGroup.controls['modelYear'].hasError('required')">
+          {{ 'You must select model-year of the car'}}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>VIN</mat-label>
+        <input matInput placeholder="VIN" formControlName="vin">
+      </mat-form-field>
+
+
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Price</mat-label>
+        <input matInput type="number" placeholder="Price" formControlName="price">
+        <mat-icon matSuffix>euro</mat-icon>
+        <mat-error *ngIf="formGroup.controls['price'].hasError('required')">
+          {{ 'You must enter price of the car'}}
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button [disabled]="!formGroup.valid" mat-raised-button color="primary" (click)="onClick(ButtonClickActionEnum.SUBMIT)" class="btn">
+      {{ data.metadata.submitBtnCaption }}
+    </button>
+    <button mat-raised-button color="accent" (click)="onClick(ButtonClickActionEnum.CANCEL)" class="btn">
+      {{ data.metadata.cancelBtnCaption }}
+    </button>
+  </mat-card-actions>
+</mat-card>

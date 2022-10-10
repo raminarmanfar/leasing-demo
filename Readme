@@ -1,0 +1,8 @@
+Application dockerization steps:
+
+- Change current directory to: 'leasing-backend' (cd leasing-demo/leasing-backend)
+1- $ ./gradlew build  (windows: $ gradlew build)
+2- $ ./gradlew bootJar (windows: $ gradlew bootJar)
+3- Change the current directory to leasing-demo/ (cd ..)
+4- $ docker-compose up --build -d
+5- open browser and redirect to the localhost:4200

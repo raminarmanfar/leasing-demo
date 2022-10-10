@@ -1,0 +1,21 @@
+.main-container {
+  text-align: center;
+}
+
+.banner {
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+  height: 450px;
+}
+
+.btn-container {
+  margin: 40px auto;
+  width: fit-content;
+}
+
+.btn {
+  float: left;
+  margin: 10px;
+  width: auto;
+}

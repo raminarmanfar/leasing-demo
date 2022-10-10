@@ -1,0 +1,16 @@
+<div>
+  <h1>Contracts List</h1>
+  <app-table
+    [dataSource]="contractsWithoutIds"
+    [displayedColumns]="['Contract Number', 'Customer', 'Vehicle', 'VIN', 'Monthly Rate', 'Vehicle Price', 'Options']"
+    [fieldsMetadata]="fieldsMetadata"
+    (editItem)="onClick(ButtonClickActionEnum.EDIT_CONTRACT, $event)"
+    (deleteItem)="onClick(ButtonClickActionEnum.DELETE_CONTRACT, $event)"
+    (linkClick)="onLinkClick($event)">
+  </app-table>
+</div>
+
+<button mat-fab color="primary" class="float-btn" [matTooltip]="'Submit a contract'"
+        (click)="onClick(ButtonClickActionEnum.SUBMIT_NEW_CONTRACT)">
+  <mat-icon>add</mat-icon>
+</button>

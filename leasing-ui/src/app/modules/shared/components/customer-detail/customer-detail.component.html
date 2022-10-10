@@ -1,0 +1,34 @@
+<mat-card *ngIf="formGroup">
+  <mat-card-title>{{ data.metadata.title }}</mat-card-title>
+
+  <mat-card-content>
+    <form class="example-form" [formGroup]="formGroup">
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>First Name</mat-label>
+        <input matInput placeholder="First Name" formControlName="firstname">
+      </mat-form-field>
+
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Last Name</mat-label>
+        <input matInput placeholder="Last Name" formControlName="lastname">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Birthdate</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="birthdate">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button [disabled]="!formGroup.valid" mat-raised-button color="primary" (click)="onClick(ButtonClickActionEnum.SUBMIT)" class="btn">
+      {{ data.metadata.submitBtnCaption }}
+    </button>
+    <button mat-raised-button color="accent" (click)="onClick(ButtonClickActionEnum.CANCEL)" class="btn">
+      {{ data.metadata.cancelBtnCaption }}
+    </button>
+  </mat-card-actions>
+</mat-card>

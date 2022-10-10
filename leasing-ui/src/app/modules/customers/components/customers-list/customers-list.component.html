@@ -1,0 +1,12 @@
+<div>
+  <h1>Customers List</h1>
+  <app-table [dataSource]="customers" [fieldsMetadata]="fieldsMetadata" [showDetailBtn]="false"
+             (editItem)="onClick(ButtonClickActionEnum.EDIT_CUSTOMER, $event)"
+             (deleteItem)="onClick(ButtonClickActionEnum.DELETE_CUSTOMER, $event)">
+  </app-table>
+</div>
+
+<button mat-fab color="primary" class="float-btn" [matTooltip]="'Add new Customer'"
+        (click)="onClick(ButtonClickActionEnum.ADD_NEW_CUSTOMER)">
+  <mat-icon>add</mat-icon>
+</button>

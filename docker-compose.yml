@@ -1,0 +1,103 @@
+# Use root/example as user/password credentials
+version: "3.8"
+
+services:
+  leasing-ui:
+    image: raminarmanfar/leasing-ui
+    build:
+      context: ./leasing-ui
+      dockerfile: Dockerfile
+    container_name: leasing-ui
+    restart: always
+    environment:
+      - NGINX_HOST=leasing-server
+      - NGINX_PORT=80
+    ports:
+      - "4200:80"
+    depends_on:
+      - leasing-server
+    links:
+      - leasing-server
+    command: [ 'nginx', '-g', 'daemon off;' ]
+    networks:
+      - leasing_net
+    volumes:
+      - ./leasing-ui/default.conf:/etc/nginx/conf.d/default.conf
+
+  leasing-server:
+    build:
+      context: ./leasing-backend
+      dockerfile: Dockerfile
+    image: raminarmanfar/leasing-server
+    container_name: leasing-server
+    ports:
+      - "6868:6868"
+    restart: always
+    links:
+      - mysqldb:mysqldb
+    networks:
+      - leasing_net
+    depends_on:
+      - mysqldb
+      - flyway
+#      mysqldb:
+#        condition: service_started
+#      flyway:
+#          condition: service_started
+
+  mysqldb:
+    image: mysql
+    container_name: mysqldb
+    restart: always
+    env_file: leasing-ui/.env
+    healthcheck:
+      test: ["CMD-SHELL", 'mysqladmin ping']
+      interval: 10s
+      timeout: 2s
+      retries: 10
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQLDB_DATABASE
+#      - MYSQL_USER=root
+#      - MYSQL_PASSWORD=root
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "3306:3306"
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - leasing_net
+
+  flyway:
+    image: flyway/flyway
+    container_name: flyway
+    restart: always
+    env_file: leasing-ui/.env
+    command: -url=jdbc:mysql://                                                                                                                                                                                                                                                                                      -schemas=$MYSQLDB_DATABASE -user=$MYSQLDB_USER -password=$MYSQLDB_LOCAL_PORT -connectRetries=60 migrate
+    volumes:
+      - .:/flyway/sql
+    depends_on:
+      - mysqldb
+    networks:
+      - leasing_net
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    env_file: leasing-ui/.env
+    links:
+      - mysqldb
+    depends_on:
+      - mysqldb
+    ports:
+      - "3307:8080"
+    networks:
+      - leasing_net
+
+volumes:
+  db:
+
+networks:
+  leasing_net:
+    driver: bridge
